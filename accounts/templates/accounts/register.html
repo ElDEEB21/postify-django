@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% load static %} {% load socialaccount %} 
+{% block title %}Create Account - Postify{% endblock %} {% block css_files %}
+<link rel="stylesheet" href="{% static 'accounts/auth.css' %}" />
+{% endblock %} {% block content %}
+<div class="auth-container">
+  <div class="auth-form-wrapper">
+    <div class="auth-header">
+      <h1>Create Account</h1>
+      <p>Join Postify and start sharing your stories</p>
+    </div>
+
+    {% if form.non_field_errors %}
+    <div class="messages">
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-error">{{ error }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="full_name">Full Name</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          {{ form.full_name }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-wrapper">
+          <span class="input-icon">✉️</span>
+          {{ form.email }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          {{ form.password }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          {{ form.confirm_password }}
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Create Account</button>
+
+      <div class="separator"><span>OR</span></div>
+
+      <a href="{% provider_login_url 'google' %}" class="btn-secondary">
+        <span class="btn-icon">G</span>
+        Sign up with Google
+      </a>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

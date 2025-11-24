@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Postify{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app.css' %}" />
+    {% block css_files %}{% endblock %}
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <a href="">
+            <span class="logo-icon">✏️</span>
+            <span>Postify</span>
+          </a>
+        </div>
+        <nav class="nav-links">
+          <a href="">Home</a>
+          <a href="">Blog</a>
+          <a href="">Dashboard</a>
+          <a href="{% url 'profile' %}" class="active">Profile</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="btn-write">Write</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">{% block content %}{% endblock %}</main>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <span>✏️</span>
+            <span>Postify</span>
+          </div>
+          <p>A modern blogging platform for writers and readers.</p>
+          <div class="social-icons">
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="GitHub">GitHub</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Blog</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Categories</h4>
+          <ul>
+            <li><a href="">Technology</a></li>
+            <li><a href="">Design</a></li>
+            <li><a href="">Development</a></li>
+            <li><a href="">Business</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Get in Touch</h4>
+          <a href="mailto:hello@postify.com">hello@postify.com</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Postify. All rights reserved.</p>
+        <button class="help-icon" aria-label="Help">?</button>
+      </div>
+    </footer>
+  </body>
+</html>
