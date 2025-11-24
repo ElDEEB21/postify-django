@@ -40,7 +40,7 @@
           >
         </nav>
         <div class="nav-actions">
-            <a href="{% url 'write_blog' %}" class="btn-write">Write</a>
+          <a href="{% url 'write_blog' %}" class="btn-write">Write</a>
         </div>
       </div>
     </header>
@@ -72,14 +72,21 @@
           </ul>
         </div>
 
-        <div class="footer-section">
+        <div class="footer-section categories-section">
           <h4>Categories</h4>
-          <ul>
-            <li><a href="">Technology</a></li>
-            <li><a href="">Design</a></li>
-            <li><a href="">Development</a></li>
-            <li><a href="">Business</a></li>
-          </ul>
+          <div class="categories-grid">
+            {% if all_categories %} {% for category in all_categories %}
+            <a
+              href="{% url 'blog_home' %}?category={{ category.id }}"
+              class="category-tag"
+              >{{ category.name }}</a
+            >
+            {% endfor %} {% else %}
+            <a href="{% url 'blog_home' %}" class="category-tag"
+              >All Categories</a
+            >
+            {% endif %}
+          </div>
         </div>
 
         <div class="footer-section">

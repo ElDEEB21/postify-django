@@ -1,1 +1,56 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog - Postify{% endblock %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'blog/blog_home.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="blog-page-container">
+    <div class="blog-header">
+      <div class="header-content">
+        <h1 class="blog-title">✨ Discover Amazing Stories</h1>
+        <p class="blog-subtitle">Explore articles on technology, design, development and more</p>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <form method="get" action="{% url 'blog_home' %}" class="filter-form">
+        <select name="category" class="filter-dropdown" onchange="this.form.submit()">
+          <option value="">All Categories</option>
+          {% for category in categories %}
+            <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+              {{ category.name }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <select name="tag" class="filter-dropdown" onchange="this.form.submit()">
+          <option value="">All Tags</option>
+          {% for tag in tags %}
+            <option value="{{ tag.id }}" {% if selected_tag == tag.id|stringformat:"s" %}selected{% endif %}>
+              {{ tag.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+
+    {% if posts %}
+      <div class="posts-grid">
+        {% for post in posts %}
+          <a href="#" class="post-card-link">
+            {% include 'components/post_card.html' with post=post %}
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <span class="empty-icon">📝</span>
+        <p>No posts found. Try adjusting your filters.</p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

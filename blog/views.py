@@ -6,7 +6,37 @@ from .models import Post, Category, Tag
 
 
 def blog_home(request):
-    return render(request, 'blog/blog_home.html')
+    posts = Post.objects.all().order_by('-created_at')
+    total_posts = posts.count()
+
+    selected_category = request.GET.get('category')
+    if selected_category:
+        posts = posts.filter(category_id=selected_category)
+    
+    selected_tag = request.GET.get('tag')
+    if selected_tag:
+        posts = posts.filter(tags__id=selected_tag)
+    
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
+    
+    context = {
+        'posts': posts,
+        'total_posts': total_posts,
+        'categories': categories,
+        'tags': tags,
+        'selected_category': selected_category,
+        'selected_tag': selected_tag,
+        'all_categories': categories,
+    }
+    
+    return render(request, 'blog/blog_home.html', context)
+
+
+def get_base_context(request):
+    return {
+        'all_categories': Category.objects.all()
+    }
 
 
 @login_required
