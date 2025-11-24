@@ -18,13 +18,29 @@
           </a>
         </div>
         <nav class="nav-links">
-          <a href="">Home</a>
-          <a href="">Blog</a>
-          <a href="">Dashboard</a>
-          <a href="{% url 'profile' %}" class="active">Profile</a>
+          <a
+            href=""
+            class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            >Home</a
+          >
+          <a
+            href="{% url 'blog_home' %}"
+            class="{% if request.resolver_match.url_name == 'blog_home' %}active{% endif %}"
+            >Blog</a
+          >
+          <a
+            href=""
+            class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+            >Dashboard</a
+          >
+          <a
+            href="{% url 'profile' %}"
+            class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+            >Profile</a
+          >
         </nav>
         <div class="nav-actions">
-          <button class="btn-write">Write</button>
+            <a href="{% url 'write_blog' %}" class="btn-write">Write</a>
         </div>
       </div>
     </header>
@@ -50,7 +66,7 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="">Home</a></li>
-            <li><a href="">Blog</a></li>
+            <li><a href="{% url 'blog_home' %}">Blog</a></li>
             <li><a href="">About</a></li>
             <li><a href="">Contact</a></li>
           </ul>
