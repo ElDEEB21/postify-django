@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import RegisterForm, LoginForm, ProfileForm
 from .models import Profile
+from blog.models import Post
 
 
 def register(request):
@@ -98,8 +99,10 @@ def profile(request):
     else:
         initial_data = {"name": request.user.get_full_name()}
         form = ProfileForm(instance=profile_obj, initial=initial_data)
+    
+    user_posts = Post.objects.filter(author=request.user).order_by('-created_at')
 
-    return render(request, "accounts/profile.html", {"form": form})
+    return render(request, "accounts/profile.html", {"form": form, "user_posts": user_posts})
 
 
 def logout_view(request):

@@ -1,0 +1,57 @@
+<div class="post-card">
+  {% if post.cover_image %}
+  <img
+    src="{{ post.get_cover_image_data_url }}"
+    alt="{{ post.title }}"
+    class="post-card-image"
+  />
+  {% else %}
+  <div class="post-card-image-placeholder"></div>
+  {% endif %}
+
+  <div class="post-card-content">
+    {% if post.category %}
+    <span class="post-card-category">{{ post.category.name }}</span>
+    {% endif %}
+
+    <h3 class="post-card-title">{{ post.title }}</h3>
+
+    {% if post.excerpt %}
+    <p class="post-card-excerpt">{{ post.excerpt }}</p>
+    {% endif %} {% if post.tags.all %}
+    <div class="post-card-tags">
+      {% for tag in post.tags.all %}
+      <span class="post-card-tag">#{{ tag.name }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="post-card-footer">
+    <div class="post-card-author">
+      <div class="author-avatar">
+        {{ post.author.first_name.0 }}{{ post.author.last_name.0 }}
+      </div>
+      <span class="author-name">{{ post.author.get_full_name }}</span>
+    </div>
+    <div class="post-card-date">
+      <span>📅</span>
+      <span>{{ post.created_at|date:"M d, Y" }}</span>
+    </div>
+  </div>
+
+  <div class="post-card-metadata">
+    <div class="metadata-item">
+      <span>👁️</span>
+      <span>{{ post.views|default:"0" }}</span>
+    </div>
+    <div class="metadata-item">
+      <span>💬</span>
+      <span>{{ post.comments_count|default:"0" }}</span>
+    </div>
+    <div class="metadata-item">
+      <span>🕐</span>
+      <span>{{ post.read_time|default:"1" }} min read</span>
+    </div>
+  </div>
+</div>

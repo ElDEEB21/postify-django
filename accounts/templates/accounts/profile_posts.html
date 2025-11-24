@@ -1,0 +1,35 @@
+<div class="profile-posts-section">
+  <div class="posts-tabs">
+    <button class="tab-btn active" data-tab="posts">
+      Posts ({{ user_posts.count }})
+    </button>
+    <button class="tab-btn" data-tab="drafts">Drafts</button>
+  </div>
+
+  <div class="tab-content active" id="posts-tab">
+    {% if user_posts %}
+    <div class="posts-grid">
+      {% for post in user_posts %}
+      <a href="#" class="post-card-link">
+        {% include 'components/post_card.html' with post=post %}
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <span class="empty-icon">📝</span>
+      <p>
+        No posts yet.
+        <a href="{% url 'write_blog' %}">Write your first post!</a>
+      </p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="tab-content" id="drafts-tab">
+    <div class="empty-state">
+      <span class="empty-icon">📄</span>
+      <p>No drafts yet.</p>
+    </div>
+  </div>
+</div>
