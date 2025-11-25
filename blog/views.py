@@ -77,9 +77,6 @@ def post_detail(request, slug):
     except Post.DoesNotExist:
         return render(request, 'blog/404.html', status=404)
 
-    context = {
-        'post': post,
-        'all_categories': Category.objects.all()
-    }
+    context = {'post': post,}
     
     return render(request, 'blog/post_detail.html', context)
