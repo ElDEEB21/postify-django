@@ -9,7 +9,7 @@ from blog.models import Post
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('user_profile', username=request.user.username)
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -28,8 +28,9 @@ def register(request):
                 return render(request, 'accounts/register.html', {'form': form})
 
             names = full_name.split(' ', 1)
+
             user = User.objects.create_user(
-                username=email,
+                username=email,  # Will be overridden by CustomAccountAdapter
                 email=email,
                 password=password,
                 first_name=names[0],
@@ -40,7 +41,7 @@ def register(request):
 
             auth_login(request, user,
                        backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('profile')
+            return redirect('user_profile', username=user.username)
     else:
         form = RegisterForm()
 
@@ -49,7 +50,7 @@ def register(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('user_profile', username=request.user.username)
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -61,7 +62,7 @@ def login(request):
 
             if user is not None:
                 auth_login(request, user)
-                return redirect('profile')
+                return redirect('user_profile', username=user.username)
             else:
                 form.add_error(None, 'Invalid email or password.')
     else:
@@ -70,41 +71,53 @@ def login(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
-@login_required(login_url='login')
-def profile(request):
-    profile_obj, created = Profile.objects.get_or_create(user=request.user)
-
-    if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=profile_obj)
-        if form.is_valid():
-            profile = form.save(commit=False)
-
-            # Handle avatar file upload
-            avatar_file = form.cleaned_data.get('avatar_file')
-            if avatar_file:
-                # Read the file and store as binary
-                profile.avatar = avatar_file.read()
-                profile.avatar_type = avatar_file.content_type
-
-            profile.save()
-
-            name = form.cleaned_data.get("name")
-            if name:
-                names = name.split(" ", 1)
-                request.user.first_name = names[0]
-                request.user.last_name = names[1] if len(names) > 1 else ""
-                request.user.save()
-
-            return redirect("profile")
-    else:
-        initial_data = {"name": request.user.get_full_name()}
-        form = ProfileForm(instance=profile_obj, initial=initial_data)
-    
-    user_posts = Post.objects.filter(author=request.user).order_by('-created_at')
-
-    return render(request, "accounts/profile.html", {"form": form, "user_posts": user_posts})
-
-
 def logout_view(request):
     auth_logout(request)
     return redirect("login")
+
+
+def user_profile(request, username):
+    try:
+        profile_user = User.objects.get(username=username)
+        profile_obj, created = Profile.objects.get_or_create(user=profile_user)
+        user_posts = Post.objects.filter(
+            author=profile_user).order_by('-created_at')
+
+        is_own_profile = request.user.is_authenticated and request.user.username == username
+
+        if request.method == "POST" and is_own_profile:
+            form = ProfileForm(request.POST, request.FILES,
+                               instance=profile_obj)
+            if form.is_valid():
+                profile = form.save(commit=False)
+
+                avatar_file = form.cleaned_data.get('avatar_file')
+                if avatar_file:
+                    profile.avatar = avatar_file.read()
+                    profile.avatar_type = avatar_file.content_type
+
+                profile.save()
+
+                name = form.cleaned_data.get("name")
+                if name:
+                    names = name.split(" ", 1)
+                    request.user.first_name = names[0]
+                    request.user.last_name = names[1] if len(names) > 1 else ""
+                    request.user.save()
+
+                return redirect('user_profile', username=username)
+        else:
+            initial_data = {"name": profile_user.get_full_name()}
+            form = ProfileForm(instance=profile_obj, initial=initial_data)
+
+        context = {
+            'profile_user': profile_user,
+            'profile': profile_obj,
+            'user_posts': user_posts,
+            'is_own_profile': is_own_profile,
+            'form': form,
+        }
+    except User.DoesNotExist:
+        return render(request, 'accounts/404.html', status=404)
+
+    return render(request, 'accounts/profile.html', context)

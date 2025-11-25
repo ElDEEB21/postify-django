@@ -3,7 +3,9 @@
     <button class="tab-btn active" data-tab="posts">
       Posts ({{ user_posts.count }})
     </button>
+    {% if is_own_profile %}
     <button class="tab-btn" data-tab="drafts">Drafts</button>
+    {% endif %}
   </div>
 
   <div class="tab-content active" id="posts-tab">

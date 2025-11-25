@@ -1,28 +1,15 @@
-{% extends "base.html" %} 
-
-{% load static %} 
-
-{% block title %}User Profile - Postify{% endblock %} 
-
+{% extends "base.html" %} {% load static %} {% block title %}
+{{ profile_user.get_full_name|default:profile_user.username }} - Postify{% endblock %} 
 {% block css_files %}
 <link rel="stylesheet" href="{% static 'accounts/profile.css' %}" />
+{% if is_own_profile %}
 <script src="{% static 'accounts/profile.js' %}" defer></script>
-{% endblock %} 
-
-{% block content %} 
-  {% if user.is_authenticated %}
-    <div class="profile-page-container">
-      <div class="profile-card">
-        {% include 'accounts/profile_view.html' %} 
-        {% include 'accounts/profile_edit.html' %}
-      </div>
-      {% include 'accounts/profile_posts.html' %}
-    </div>
-    {% else %}
-    <div class="profile-page-container">
-      <div class="profile-card" style="text-align: center">
-        <p>Please <a href="{% url 'login' %}">login</a> to view your profile.</p>
-      </div>
-    </div>
-  {% endif %} 
+{% endif %} {% endblock %} {% block content %}
+<div class="profile-page-container">
+  <div class="profile-card">
+    {% include 'accounts/profile_view.html' %} {% if is_own_profile %} {%
+    include 'accounts/profile_edit.html' %} {% endif %}
+  </div>
+  {% include 'accounts/profile_posts.html' %}
+</div>
 {% endblock %}

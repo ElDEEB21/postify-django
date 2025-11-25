@@ -81,7 +81,7 @@ Postify{% endblock %} {% block css_files %}
       <p>
         {{ post.author.profile.bio|default:"Tech writer and software developer. Passionate about web development and design." }}
       </p>
-      <a href="{% url 'profile' %}" class="btn-view-profile">View Profile</a>
+      <a href="{% url 'user_profile' username=post.author.username %}" class="btn-view-profile">View Profile</a>
     </div>
   </div>
 </div>

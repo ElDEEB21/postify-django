@@ -4,15 +4,15 @@
 
     <div class="edit-profile-header">
       <div class="profile-avatar">
-        {% if user.profile.get_avatar_data_url %}
+        {% if profile.get_avatar_data_url %}
         <img
-          src="{{ user.profile.get_avatar_data_url }}"
+          src="{{ profile.get_avatar_data_url }}"
           alt="Avatar"
           id="avatar-preview"
         />
         {% else %}
         <img
-          src="https://ui-avatars.com/api/?name={{ user.get_full_name|urlencode }}&size=100&background=1e78ff&color=fff"
+          src="https://ui-avatars.com/api/?name={{ profile_user.get_full_name|urlencode }}&size=100&background=1e78ff&color=fff"
           alt="Avatar"
           id="avatar-preview"
         />
