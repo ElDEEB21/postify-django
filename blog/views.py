@@ -1,36 +1,39 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, FormView
 from django.utils import timezone
 from .forms import BlogPostForm
 from .models import Post, Category, Tag
 
 
-def blog_home(request):
-    posts = Post.objects.all().order_by('-created_at')
-    total_posts = posts.count()
+class BlogHomeView(ListView):
+    model = Post
+    template_name = 'blog/blog_home.html'
+    context_object_name = 'posts'
+    ordering = ['-created_at']
 
-    selected_category = request.GET.get('category')
-    if selected_category:
-        posts = posts.filter(category_id=selected_category)
-    
-    selected_tag = request.GET.get('tag')
-    if selected_tag:
-        posts = posts.filter(tags__id=selected_tag)
-    
-    categories = Category.objects.all()
-    tags = Tag.objects.all()
-    
-    context = {
-        'posts': posts,
-        'total_posts': total_posts,
-        'categories': categories,
-        'tags': tags,
-        'selected_category': selected_category,
-        'selected_tag': selected_tag,
-        'all_categories': categories,
-    }
-    
-    return render(request, 'blog/blog_home.html', context)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        selected_category = self.request.GET.get('category')
+        if selected_category:
+            queryset = queryset.filter(category_id=selected_category)
+
+        selected_tag = self.request.GET.get('tag')
+        if selected_tag:
+            queryset = queryset.filter(tags__id=selected_tag)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_posts'] = Post.objects.count()
+        context['categories'] = Category.objects.all()
+        context['tags'] = Tag.objects.all()
+        context['selected_category'] = self.request.GET.get('category')
+        context['selected_tag'] = self.request.GET.get('tag')
+        context['all_categories'] = Category.objects.all()
+        return context
 
 
 def get_base_context(request):
@@ -39,44 +42,44 @@ def get_base_context(request):
     }
 
 
-@login_required
-def write_blog(request):
-    if request.method == 'POST':
-        form = BlogPostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = Post(
-                author=request.user,
-                title=form.cleaned_data['title'],
-                excerpt=form.cleaned_data['excerpt'],
-                content=form.cleaned_data['content'],
-                created_at=timezone.now(),
-            )
+class WriteBlogView(LoginRequiredMixin, FormView):
+    template_name = 'blog/write_blog.html'
+    form_class = BlogPostForm
+    login_url = 'login'
 
-            cover_image_file = form.cleaned_data.get('cover_image')
-            if cover_image_file:
-                post.cover_image = cover_image_file.read()
-                post.cover_image_type = cover_image_file.content_type
-                
-            post.category = form.cleaned_data.get('category')
-            
-            post.save()
+    def form_valid(self, form):
+        post = Post(
+            author=self.request.user,
+            title=form.cleaned_data['title'],
+            excerpt=form.cleaned_data['excerpt'],
+            content=form.cleaned_data['content'],
+            created_at=timezone.now(),
+        )
 
-            selected_tags = form.cleaned_data.get('tags')
-            if selected_tags:
-                post.tags.set(selected_tags)
+        cover_image_file = form.cleaned_data.get('cover_image')
+        if cover_image_file:
+            post.cover_image = cover_image_file.read()
+            post.cover_image_type = cover_image_file.content_type
 
-            return render(request, 'blog/blog_home.html', {'message': 'Blog post created successfully!'})
-    else:
-        form = BlogPostForm()
+        post.category = form.cleaned_data.get('category')
+        post.save()
 
-    return render(request, 'blog/write_blog.html', {'form': form})
+        selected_tags = form.cleaned_data.get('tags')
+        if selected_tags:
+            post.tags.set(selected_tags)
 
-def post_detail(request, slug):
-    try:
-        post = Post.objects.get(slug=slug)
-    except Post.DoesNotExist:
-        return render(request, 'blog/404.html', status=404)
+        return redirect('blog_home')
 
-    context = {'post': post,}
-    
-    return render(request, 'blog/post_detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'message' in self.request.GET:
+            context['message'] = 'Blog post created successfully!'
+        return context
+
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
