@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% load static %} {% block title %}{{ post.title }} -
+Postify{% endblock %} {% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/post_detail.css' %}" />
+{% endblock %} {% block content %}
+<div class="post-detail-container">
+    <a href="{% url 'blog_home' %}" class="back-link">← Back to Blog</a>
+
+    {% if post.category %}
+    <div>
+        <span class="post-category">{{ post.category.name }}</span>
+    </div>
+    {% endif %}
+
+  <h1 class="post-title">{{ post.title }}</h1>
+
+  <div class="post-metadata">
+    <div class="metadata-item">
+      <span>📅</span>
+      <span>{{ post.created_at|date:"F d, Y" }}</span>
+    </div>
+  </div>
+
+  <div class="author-block">
+    <div class="author-info">
+      <div class="author-avatar">
+        {% if post.author.profile.get_avatar_data_url %}
+        <img
+          src="{{ post.author.profile.get_avatar_data_url }}"
+          alt="{{ post.author.get_full_name }}"
+        />
+        {% else %}
+        <div class="avatar-placeholder">
+          {{ post.author.first_name.0 }}{{ post.author.last_name.0 }}
+        </div>
+        {% endif %}
+      </div>
+      <div class="author-details">
+        <div class="author-name">{{ post.author.get_full_name }}</div>
+        <div class="author-bio">
+          {{ post.author.profile.bio|default:"Writer and content creator" }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if post.cover_image %}
+  <img
+    src="{{ post.get_cover_image_data_url }}"
+    alt="{{ post.title }}"
+    class="post-cover-image"
+  />
+  {% endif %}
+
+  <article class="post-content">{{ post.content|linebreaks }}</article>
+
+  {% if post.tags.all %}
+  <div class="post-tags-section">
+    <div class="post-tags">
+      {% for tag in post.tags.all %}
+      <a href="{% url 'blog_home' %}?tag={{ tag.id }}" class="tag">#{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+<div class="author-bio-card">
+    <div class="bio-avatar">
+      {% if post.author.profile.get_avatar_data_url %}
+      <img
+        src="{{ post.author.profile.get_avatar_data_url }}"
+        alt="{{ post.author.get_full_name }}"
+      />
+      {% else %}
+      <div class="avatar-placeholder-large">
+        {{ post.author.first_name.0 }}{{ post.author.last_name.0 }}
+      </div>
+      {% endif %}
+    </div>
+    <div class="bio-content">
+      <h3>About {{ post.author.get_full_name }}</h3>
+      <p>
+        {{ post.author.profile.bio|default:"Tech writer and software developer. Passionate about web development and design." }}
+      </p>
+      <a href="{% url 'profile' %}" class="btn-view-profile">View Profile</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

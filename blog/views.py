@@ -49,7 +49,7 @@ def write_blog(request):
                 title=form.cleaned_data['title'],
                 excerpt=form.cleaned_data['excerpt'],
                 content=form.cleaned_data['content'],
-                created_at=timezone.now()
+                created_at=timezone.now(),
             )
 
             cover_image_file = form.cleaned_data.get('cover_image')
@@ -70,3 +70,16 @@ def write_blog(request):
         form = BlogPostForm()
 
     return render(request, 'blog/write_blog.html', {'form': form})
+
+def post_detail(request, slug):
+    try:
+        post = Post.objects.get(slug=slug)
+    except Post.DoesNotExist:
+        return render(request, 'blog/404.html', status=404)
+
+    context = {
+        'post': post,
+        'all_categories': Category.objects.all()
+    }
+    
+    return render(request, 'blog/post_detail.html', context)
