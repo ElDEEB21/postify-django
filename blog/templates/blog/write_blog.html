@@ -1,15 +1,14 @@
-{% extends "base.html" %} {% load static %} {% block title %}Edit Post -
-Postify{% endblock %} {% block css_files %}
+{% extends "base.html" %} {% load static %} {% block title %}{% if post %}Edit{%
+else %}Write{% endif %} Post - Postify{% endblock %} {% block css_files %}
 <link rel="stylesheet" href="{% static 'blog/write_blog.css' %}" />
 {% endblock %} {% block content %}
 <div class="editor-container">
-  <h1 class="page-title">Edit Post</h1>
+  <h1 class="page-title">{% if post %}Edit{% else %}Write{% endif %} Post</h1>
 
   <form method="POST" enctype="multipart/form-data" class="editor-form">
     {% csrf_token %}
 
     <div class="form-layout">
-      <!-- Main Content Area -->
       <div class="main-content">
         <div class="form-group">
           <label for="id_title">Title *</label>
@@ -28,7 +27,6 @@ Postify{% endblock %} {% block css_files %}
         </div>
       </div>
 
-      <!-- Sidebar Area -->
       <div class="sidebar">
         <div class="sidebar-card">
           <h3 class="card-title">Cover Image</h3>
@@ -58,7 +56,9 @@ Postify{% endblock %} {% block css_files %}
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn-publish">Publish</button>
+      <button type="submit" class="btn-publish">
+        {% if post %}Update Post{% else %}Publish{% endif %}
+      </button>
     </div>
   </form>
 </div>

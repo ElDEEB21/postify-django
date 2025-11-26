@@ -3,13 +3,20 @@ Postify{% endblock %} {% block css_files %}
 <link rel="stylesheet" href="{% static 'blog/post_detail.css' %}" />
 {% endblock %} {% block content %}
 <div class="post-detail-container">
+  <div class="post-actions-bar">
     <a href="{% url 'blog_home' %}" class="back-link">← Back to Blog</a>
-
-    {% if post.category %}
-    <div>
-        <span class="post-category">{{ post.category.name }}</span>
-    </div>
+    {% if user.is_authenticated and user == post.author %}
+    <a href="{% url 'edit_blog' post.slug %}" class="btn-edit-post"
+      >✏️ Edit Post</a
+    >
     {% endif %}
+  </div>
+
+  {% if post.category %}
+  <div>
+    <span class="post-category">{{ post.category.name }}</span>
+  </div>
+  {% endif %}
 
   <h1 class="post-title">{{ post.title }}</h1>
 
@@ -57,13 +64,15 @@ Postify{% endblock %} {% block css_files %}
   <div class="post-tags-section">
     <div class="post-tags">
       {% for tag in post.tags.all %}
-      <a href="{% url 'blog_home' %}?tag={{ tag.id }}" class="tag">#{{ tag.name }}</a>
+      <a href="{% url 'blog_home' %}?tag={{ tag.id }}" class="tag"
+        >#{{ tag.name }}</a
+      >
       {% endfor %}
     </div>
   </div>
   {% endif %}
 
-<div class="author-bio-card">
+  <div class="author-bio-card">
     <div class="bio-avatar">
       {% if post.author.profile.get_avatar_data_url %}
       <img
@@ -79,9 +88,14 @@ Postify{% endblock %} {% block css_files %}
     <div class="bio-content">
       <h3>About {{ post.author.get_full_name }}</h3>
       <p>
-        {{ post.author.profile.bio|default:"Tech writer and software developer. Passionate about web development and design." }}
+        {{ post.author.profile.bio|default:"Tech writer and software developer.
+        Passionate about web development and design." }}
       </p>
-      <a href="{% url 'user_profile' username=post.author.username %}" class="btn-view-profile">View Profile</a>
+      <a
+        href="{% url 'user_profile' username=post.author.username %}"
+        class="btn-view-profile"
+        >View Profile</a
+      >
     </div>
   </div>
 </div>

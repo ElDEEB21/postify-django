@@ -47,33 +47,65 @@ class WriteBlogView(LoginRequiredMixin, FormView):
     form_class = BlogPostForm
     login_url = 'login'
 
+    def get_post(self):
+        slug = self.kwargs.get('slug')
+        if slug:
+            try:
+                post = Post.objects.get(slug=slug, author=self.request.user)
+                return post
+            except Post.DoesNotExist:
+                return None
+        return None
+
+    def get_initial(self):
+        initial = super().get_initial()
+        post = self.get_post()
+        if post:
+            initial['title'] = post.title
+            initial['excerpt'] = post.excerpt
+            initial['content'] = post.content
+            initial['category'] = post.category
+            initial['tags'] = post.tags.all()
+        return initial
+
     def form_valid(self, form):
-        post = Post(
-            author=self.request.user,
-            title=form.cleaned_data['title'],
-            excerpt=form.cleaned_data['excerpt'],
-            content=form.cleaned_data['content'],
-            created_at=timezone.now(),
-        )
+        post = self.get_post()
+
+        if post:
+            post.title = form.cleaned_data['title']
+            post.excerpt = form.cleaned_data['excerpt']
+            post.content = form.cleaned_data['content']
+            post.category = form.cleaned_data.get('category')
+        else:
+            post = Post(
+                author=self.request.user,
+                title=form.cleaned_data['title'],
+                excerpt=form.cleaned_data['excerpt'],
+                content=form.cleaned_data['content'],
+                created_at=timezone.now(),
+                category=form.cleaned_data.get('category'),
+            )
 
         cover_image_file = form.cleaned_data.get('cover_image')
         if cover_image_file:
             post.cover_image = cover_image_file.read()
             post.cover_image_type = cover_image_file.content_type
 
-        post.category = form.cleaned_data.get('category')
         post.save()
 
         selected_tags = form.cleaned_data.get('tags')
         if selected_tags:
             post.tags.set(selected_tags)
 
-        return redirect('blog_home')
+        return redirect('post_detail', slug=post.slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        post = self.get_post()
+        if post:
+            context['post'] = post
         if 'message' in self.request.GET:
-            context['message'] = 'Blog post created successfully!'
+            context['message'] = 'Blog post saved successfully!'
         return context
 
 
