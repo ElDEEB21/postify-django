@@ -1,14 +1,17 @@
 /* Authentication Pages */
 
 :root {
-  --primary: #1e78ff;
-  --primary-hover: #1565d8;
-  --text: #111;
+  --primary: #4e56c0;
+  --primary-hover: #3d4599;
+  --secondary: #9b5de0;
+  --accent: #d78fee;
+  --light-accent: #fdcffa;
+  --text: #1a1a2e;
   --text-light: #555;
   --text-muted: #999;
-  --border: #ddd;
-  --bg: #fff;
-  --bg-light: #f8f9fa;
+  --border: rgba(215, 143, 238, 0.4);
+  --bg: rgba(253, 207, 250, 0.5);
+  --bg-light: rgba(253, 207, 250, 0.3);
 }
 
 .auth-container {
@@ -17,16 +20,18 @@
   align-items: center;
   min-height: calc(100vh - 60px - 400px);
   padding: 40px 20px;
-  background: var(--bg-light);
+  background: transparent;
 }
 
 .auth-form-wrapper {
   max-width: 400px;
   width: 100%;
   padding: 30px;
-  background: var(--bg);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: rgba(253, 207, 250, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(78, 86, 192, 0.2);
+  border: 1px solid rgba(215, 143, 238, 0.4);
 }
 
 /* Alerts */

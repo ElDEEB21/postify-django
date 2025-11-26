@@ -12,21 +12,28 @@
   font-size: 48px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #111;
+  color: #1a1a2e;
+  background: linear-gradient(135deg, #4e56c0 0%, #9b5de0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .page-text {
   font-size: 18px;
-  color: #555;
+  color: #333;
   line-height: 1.8;
   margin-bottom: 20px;
 }
 
 .contact-box {
-  background: #f8f8f8;
+  background: rgba(253, 207, 250, 0.5);
+  backdrop-filter: blur(10px);
   padding: 40px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-top: 30px;
+  border: 1px solid rgba(215, 143, 238, 0.3);
+  box-shadow: 0 4px 16px rgba(78, 86, 192, 0.15);
 }
 
 .contact-item {
