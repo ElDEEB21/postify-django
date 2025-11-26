@@ -1,0 +1,105 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Postify - Share
+Your Stories with the World{% endblock %} {% block css_files %}
+<link rel="stylesheet" href="{% static 'core/home.css' %}" />
+<link rel="stylesheet" href="{% static 'components/post_card.css' %}" />
+{% endblock %} {% block content %}
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-headline">Share Your Stories with the World</h1>
+      <p class="hero-description">
+        Postify is a modern blogging platform where writers share their ideas
+        and readers discover amazing content.
+      </p>
+      <div class="hero-buttons">
+        <a href="{% url 'write_blog' %}" class="btn-primary">
+          Start Writing
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M3 8H13M13 8L8 3M13 8L8 13"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+        <a href="{% url 'blog_home' %}" class="btn-secondary">Explore Posts</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img
+        src="{% static 'core/images/hero-image.png' %}"
+        alt="Writing illustration"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="featured-section">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+            fill="#FF6B35"
+          />
+        </svg>
+        Featured Posts
+      </h2>
+    </div>
+    <div class="posts-grid">
+      {% for post in featured_posts %}
+      <a href="{% url 'post_detail' post.slug %}" class="post-link">
+        {% include 'components/post_card.html' %}
+      </a>
+      {% empty %}
+      <p class="no-posts">No featured posts yet. Be the first to write!</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="latest-section">
+  <div class="section-container">
+    <div class="section-header section-header-flex">
+      <h2>Latest Posts</h2>
+      <a href="{% url 'blog_home' %}" class="view-all-link">View All Posts →</a>
+    </div>
+    <div class="posts-grid">
+      {% for post in latest_posts %}
+      <a href="{% url 'post_detail' post.slug %}" class="post-link">
+        {% include 'components/post_card.html' %}
+      </a>
+      {% empty %}
+      <p class="no-posts">
+        No posts yet. Start writing to see your posts here!
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if not user.is_authenticated %}
+<section class="cta-banner">
+  <div class="cta-container">
+    <h2 class="cta-headline">Ready to Start Writing?</h2>
+    <p class="cta-description">
+      Join thousands of writers sharing their stories on Postify.
+    </p>
+    <a href="{% url 'register' %}" class="btn-cta">
+      Get Started for Free
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path
+          d="M3 8H13M13 8L8 3M13 8L8 13"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
+  </div>
+</section>
+{% endif %} {% endblock %}

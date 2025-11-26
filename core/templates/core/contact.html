@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Contact - Postify
+{% endblock %} {% block css_files %}
+<link rel="stylesheet" href="{% static 'core/page.css' %}" />
+{% endblock %} {% block content %}
+<div class="page-container page-narrow">
+  <h1 class="page-title">Contact Us</h1>
+  <p class="page-text">
+    Have questions or feedback? We'd love to hear from you!
+  </p>
+  <div class="contact-box">
+    <p class="contact-item"><strong>Email:</strong> hello@postify.com</p>
+    <p class="contact-item"><strong>Twitter:</strong> @postify</p>
+    <p class="contact-item"><strong>GitHub:</strong> github.com/postify</p>
+  </div>
+</div>
+{% endblock %}

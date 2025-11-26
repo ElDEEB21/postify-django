@@ -40,6 +40,7 @@ SITE_ID = 2
 INSTALLED_APPS = [
     'accounts',
     'blog',
+    'core',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
