@@ -29,9 +29,17 @@
 
   <div class="post-card-footer">
     <div class="post-card-author">
+      {% if post.author.profile.avatar %}
+      <img
+        src="{{ post.author.profile.get_avatar_data_url }}"
+        alt="{{ post.author.get_full_name }}"
+        class="author-avatar"
+      />
+      {% else %}
       <div class="author-avatar">
         {{ post.author.first_name.0 }}{{ post.author.last_name.0 }}
       </div>
+      {% endif %}
       <span class="author-name">{{ post.author.get_full_name }}</span>
     </div>
     <div class="post-card-date">
