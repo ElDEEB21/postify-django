@@ -7,8 +7,8 @@
 {% endif %} {% endblock %} {% block content %}
 <div class="profile-page-container">
   <div class="profile-card">
-    {% include 'accounts/profile_view.html' %} {% if is_own_profile %} {%
-    include 'accounts/profile_edit.html' %} {% endif %}
+    {% include 'accounts/profile_view.html' %} {% if is_own_profile %} 
+    {% include 'accounts/profile_edit.html' %} {% endif %}
   </div>
   {% include 'accounts/profile_posts.html' %}
 </div>
