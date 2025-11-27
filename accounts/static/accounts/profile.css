@@ -1,19 +1,19 @@
 :root {
-  --primary-color: #4e56c0;
-  --primary-hover: #3d4599;
-  --secondary: #9b5de0;
-  --accent: #d78fee;
-  --light-accent: #fdcffa;
+  --primary-color: #778873;
+  --primary-hover: #5f6d5c;
+  --secondary: #a1bc98;
+  --accent: #d2dcb6;
+  --light-accent: #f1f3e0;
   --danger-color: #dc3545;
-  --text-primary: #1a1a2e;
+  --text-primary: #2d3a2e;
   --text-secondary: #333333;
   --text-tertiary: #555555;
   --text-muted: #777777;
-  --border-color: rgba(215, 143, 238, 0.4);
-  --border-light: rgba(215, 143, 238, 0.2);
-  --bg-white: rgba(253, 207, 250, 0.5);
-  --bg-hover: rgba(253, 207, 250, 0.7);
-  --shadow: 0 4px 20px rgba(78, 86, 192, 0.15);
+  --border-color: rgba(161, 188, 152, 0.5);
+  --border-light: rgba(161, 188, 152, 0.3);
+  --bg-white: rgba(241, 243, 224, 0.6);
+  --bg-hover: rgba(210, 220, 182, 0.8);
+  --shadow: 0 4px 20px rgba(119, 136, 115, 0.2);
   --transition: all 0.3s ease;
 }
 
@@ -30,7 +30,7 @@
   box-shadow: var(--shadow);
   padding: 30px;
   margin: 20px 0;
-  border: 1px solid rgba(215, 143, 238, 0.3);
+  border: 1px solid rgba(161, 188, 152, 0.5);
 }
 
 .profile-header {
@@ -313,7 +313,7 @@
 .posts-tabs {
   display: flex;
   border-bottom: 1px solid var(--border-light);
-  background-color: rgba(253, 207, 250, 0.3);
+  background-color: rgba(210, 220, 182, 0.4);
 }
 
 .tab-btn {
@@ -333,14 +333,14 @@
   color: var(--text-primary);
   background: linear-gradient(
     135deg,
-    rgba(78, 86, 192, 0.1),
-    rgba(155, 93, 224, 0.1)
+    rgba(119, 136, 115, 0.15),
+    rgba(161, 188, 152, 0.15)
   );
 }
 
 .tab-btn.active {
   color: var(--primary-color);
-  background: rgba(253, 207, 250, 0.6);
+  background: rgba(241, 243, 224, 0.8);
 }
 
 .tab-btn.active::after {
@@ -403,18 +403,18 @@
 /* Post Card Styles (Inline) */
 .post-card {
   max-width: 350px;
-  background: rgba(253, 207, 250, 0.4);
+  background: rgba(241, 243, 224, 0.6);
   backdrop-filter: blur(10px);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(78, 86, 192, 0.15);
+  box-shadow: 0 4px 12px rgba(119, 136, 115, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid rgba(215, 143, 238, 0.3);
+  border: 1px solid rgba(161, 188, 152, 0.4);
 }
 
 .post-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(78, 86, 192, 0.25);
+  box-shadow: 0 8px 20px rgba(119, 136, 115, 0.35);
 }
 
 .post-card-image {
@@ -427,7 +427,7 @@
 .post-card-image-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #4e56c0 0%, #9b5de0 50%, #d78fee 100%);
+  background: linear-gradient(135deg, #778873 0%, #a1bc98 50%, #d2dcb6 100%);
 }
 
 .post-card-content {
@@ -436,8 +436,8 @@
 
 .post-card-category {
   display: inline-block;
-  color: #4e56c0;
-  background: rgba(215, 143, 238, 0.2);
+  color: #778873;
+  background: rgba(210, 220, 182, 0.6);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -468,13 +468,13 @@
 }
 
 .post-card-tag {
-  color: #9b5de0;
+  color: #a1bc98;
   font-size: 13px;
   font-weight: 500;
 }
 
 .post-card-footer {
-  border-top: 1px solid rgba(215, 143, 238, 0.3);
+  border-top: 1px solid rgba(161, 188, 152, 0.4);
   padding: 15px 20px;
   display: flex;
   align-items: center;
@@ -491,7 +491,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4e56c0 0%, #9b5de0 50%, #d78fee 100%);
+  background: linear-gradient(135deg, #778873 0%, #a1bc98 50%, #d2dcb6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -516,11 +516,11 @@
 
 .post-card-metadata {
   padding: 12px 20px;
-  border-top: 1px solid rgba(215, 143, 238, 0.3);
+  border-top: 1px solid rgba(161, 188, 152, 0.4);
   display: flex;
   align-items: center;
   gap: 15px;
-  background: rgba(253, 207, 250, 0.3);
+  background: rgba(210, 220, 182, 0.4);
 }
 
 .post-card-metadata .metadata-item {

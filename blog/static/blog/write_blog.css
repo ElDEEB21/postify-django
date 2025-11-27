@@ -1,16 +1,16 @@
 :root {
-  --primary: #4e56c0;
-  --primary-hover: #3d4599;
-  --secondary: #9b5de0;
-  --accent: #d78fee;
-  --light-accent: #fdcffa;
-  --text: #1a1a2e;
+  --primary: #778873;
+  --primary-hover: #5f6d5c;
+  --secondary: #a1bc98;
+  --accent: #d2dcb6;
+  --light-accent: #f1f3e0;
+  --text: #2d3a2e;
   --text-light: #555;
   --text-muted: #999;
-  --border: rgba(215, 143, 238, 0.4);
-  --bg: rgba(253, 207, 250, 0.5);
-  --bg-light: rgba(253, 207, 250, 0.3);
-  --tag-bg: rgba(215, 143, 238, 0.3);
+  --border: rgba(161, 188, 152, 0.5);
+  --bg: rgba(241, 243, 224, 0.6);
+  --bg-light: rgba(210, 220, 182, 0.4);
+  --tag-bg: rgba(161, 188, 152, 0.3);
 }
 
 .editor-container {

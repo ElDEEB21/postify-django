@@ -13,7 +13,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   color: #1a1a2e;
-  background: linear-gradient(135deg, #4e56c0 0%, #9b5de0 100%);
+  background: linear-gradient(135deg, #778873 0%, #a1bc98 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -27,13 +27,13 @@
 }
 
 .contact-box {
-  background: rgba(253, 207, 250, 0.5);
+  background: rgba(241, 243, 224, 0.7);
   backdrop-filter: blur(10px);
   padding: 40px;
   border-radius: 12px;
   margin-top: 30px;
-  border: 1px solid rgba(215, 143, 238, 0.3);
-  box-shadow: 0 4px 16px rgba(78, 86, 192, 0.15);
+  border: 1px solid rgba(161, 188, 152, 0.5);
+  box-shadow: 0 4px 16px rgba(119, 136, 115, 0.2);
 }
 
 .contact-item {
