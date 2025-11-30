@@ -14,7 +14,9 @@ Postify{% endblock %} {% block css_files %}
 
   {% if post.category %}
   <div>
-    <span class="post-category">{{ post.category.name }}</span>
+    <a href="{% url 'blog_home' %}?category={{ post.category.id }}" class="post-category">
+      {{ post.category.name }}
+    </a>
   </div>
   {% endif %}
 
@@ -24,6 +26,10 @@ Postify{% endblock %} {% block css_files %}
     <div class="metadata-item">
       <span>📅</span>
       <span>{{ post.created_at|date:"F d, Y" }}</span>
+    </div>
+    <div class="metadata-item">
+      <span>👁️</span>
+      <span>{{ post.views }} view{{ post.views|pluralize }}</span>
     </div>
   </div>
 
@@ -77,7 +83,7 @@ Postify{% endblock %} {% block css_files %}
       <h3>💬 Discussion</h3>
       <span class="comment-count-badge"
         >{{ post.comments.count }} 
-        comment{{ post.comments.count|pluralize}}</span
+        comment{{post.comments.count|pluralize}}</span
       >
     </div>
     <p class="comments-preview-text">

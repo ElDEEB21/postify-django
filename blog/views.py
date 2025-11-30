@@ -115,3 +115,19 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
+
+    def get_object(self, queryset=None):
+        post = super().get_object(queryset)
+        self._increment_view_count(post)
+        return post
+
+    def _increment_view_count(self, post):
+        if self.request.user.is_authenticated and self.request.user == post.author:
+            return
+        
+        session_key = f'post_viewed_{post.id}'
+        
+        if not self.request.session.get(session_key, False):
+            post.views += 1
+            post.save(update_fields=['views'])
+            self.request.session[session_key] = True

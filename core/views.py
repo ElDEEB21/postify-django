@@ -7,8 +7,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['featured_posts'] = Post.objects.all().order_by(
-            '-created_at')[:3]
+        context['featured_posts'] = Post.objects.all().order_by('-views')[:3]
         context['latest_posts'] = Post.objects.all().order_by(
             '-created_at')[:6]
         return context
