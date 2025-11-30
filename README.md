@@ -4,7 +4,6 @@
 
 ![Django](https://img.shields.io/badge/Django-5.2.7-092E20?style=for-the-badge&logo=django)
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 **A feature-rich, production-ready blogging platform built with Django MVT architecture**
 
@@ -44,7 +43,7 @@
 
 ### 👨‍💻 Development Note
 
-> **Backend Architecture**: All backend features, models, views, business logic, and database architecture were developed from scratch by [Abdulrahman Ramadan](https://github.com/ElDEEB21), showcasing expertise in Django framework and Python development.
+> **Backend Architecture**: All backend features, models, views, business logic, and database architecture were developed from scratch by [Abdulrahman Eldeeb](https://github.com/ElDEEB21), showcasing expertise in Django framework and Python development.
 >
 > **Frontend Design**: The user interface and styling were generated with AI assistance to accelerate development, allowing focus on robust backend implementation.
 
@@ -57,6 +56,7 @@
 - Profile management with avatar support (binary storage)
 - User bio and metadata
 - Session-based authentication with allauth integration
+- Social authentication (Google OAuth integration)
 
 ### 📝 **Content Management**
 - Rich markdown editor for post creation
@@ -560,12 +560,10 @@ coverage report
 ## 📈 Future Enhancements
 
 - [ ] RESTful API with Django REST Framework
-- [ ] Social media authentication (Google, GitHub)
 - [ ] Post scheduling
 - [ ] Email notifications
 - [ ] Advanced search with Elasticsearch
 - [ ] Post drafts and revisions
-- [ ] User roles (Admin, Editor, Author)
 - [ ] Comment moderation
 - [ ] RSS feed
 - [ ] Sitemap generation
@@ -587,7 +585,7 @@ Contributions are welcome! Please follow these steps:
 
 ## 👤 Author
 
-**Abdulrahman Ramadan Abdulkareem Mohamed**
+**Abdulrahman Eldeeb**
 
 - GitHub: [@ElDEEB21](https://github.com/ElDEEB21)
 - Email: ar2724@fayoum.edu.eg
