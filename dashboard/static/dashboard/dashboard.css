@@ -1,12 +1,14 @@
-/* Dashboard Styles with Postify Color Palette */
+/* Dashboard Styles with New Color Palette */
 
 :root {
-  --primary: #778873;
-  --primary-hover: #5f6d5c;
-  --secondary: #a1bc98;
-  --accent: #d2dcb6;
-  --light-accent: #f1f3e0;
-  --text: #2d3a2e;
+  --primary: #1e40af;
+  --primary-hover: #1e3a8a;
+  --secondary: #3b82f6;
+  --accent: #f59e0b;
+  --light-accent: #f9fafb;
+  --text: #1f2937;
+  --success: #10b981;
+  --error: #ef4444;
 }
 
 .dashboard-container {
@@ -54,7 +56,7 @@
   text-decoration: none;
   border-radius: 8px;
   transition: all 0.3s;
-  box-shadow: 0 2px 10px rgba(119, 136, 115, 0.35);
+  box-shadow: 0 2px 10px rgba(30, 64, 175, 0.3);
 }
 
 .btn-new-post .icon {
@@ -65,7 +67,7 @@
 .btn-new-post:hover {
   background: linear-gradient(135deg, var(--primary-hover), var(--primary));
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(119, 136, 115, 0.5);
+  box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
 }
 
 /* Stats Cards Section */
@@ -77,12 +79,12 @@
 }
 
 .stat-card {
-  background: rgba(241, 243, 224, 0.6);
+  background: #ffffff;
   backdrop-filter: blur(10px);
   padding: 24px;
   border-radius: 12px;
-  border: 1px solid rgba(161, 188, 152, 0.5);
-  box-shadow: 0 2px 10px rgba(119, 136, 115, 0.15);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(30, 64, 175, 0.1);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -91,7 +93,7 @@
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 20px rgba(119, 136, 115, 0.25);
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.15);
   border-color: var(--secondary);
 }
 
@@ -102,7 +104,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(161, 188, 152, 0.3);
+  background: rgba(59, 130, 246, 0.1);
   border-radius: 12px;
 }
 
@@ -128,12 +130,12 @@
 
 /* Chart Section */
 .chart-section {
-  background: rgba(241, 243, 224, 0.6);
+  background: #ffffff;
   backdrop-filter: blur(10px);
   padding: 30px;
   border-radius: 12px;
-  border: 1px solid rgba(161, 188, 152, 0.5);
-  box-shadow: 0 2px 10px rgba(119, 136, 115, 0.15);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(30, 64, 175, 0.1);
   margin-bottom: 40px;
 }
 
@@ -152,12 +154,12 @@
 
 /* Recent Posts Table Section */
 .recent-posts-section {
-  background: rgba(241, 243, 224, 0.6);
+  background: #ffffff;
   backdrop-filter: blur(10px);
   padding: 30px;
   border-radius: 12px;
-  border: 1px solid rgba(161, 188, 152, 0.5);
-  box-shadow: 0 2px 10px rgba(119, 136, 115, 0.15);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(30, 64, 175, 0.1);
 }
 
 .section-header {
@@ -194,7 +196,7 @@
 }
 
 .posts-table thead {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
 }
 
 .posts-table th {
@@ -202,15 +204,15 @@
   text-align: left;
   font-size: 14px;
   font-weight: 600;
-  color: var(--text);
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid var(--secondary);
+  border-bottom: none;
 }
 
 .posts-table td {
   padding: 16px;
-  border-bottom: 1px solid rgba(161, 188, 152, 0.2);
+  border-bottom: 1px solid #e5e7eb;
   color: #333;
   font-size: 14px;
 }
@@ -220,7 +222,7 @@
 }
 
 .posts-table tbody tr:hover {
-  background-color: rgba(241, 243, 224, 0.5);
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
 .post-title-cell a {
@@ -245,13 +247,13 @@
 }
 
 .status-published {
-  background: rgba(161, 188, 152, 0.3);
-  color: var(--primary);
-  border: 1px solid var(--secondary);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  border: 1px solid var(--success);
 }
 
 .status-archived {
-  background: rgba(210, 220, 182, 0.5);
+  background: rgba(59, 130, 246, 0.1);
   color: #8a7f3a;
   border: 1px solid var(--accent);
 }
@@ -275,7 +277,7 @@
 }
 
 .action-btn:hover {
-  background: rgba(161, 188, 152, 0.2);
+  background: rgba(59, 130, 246, 0.05);
   transform: scale(1.1);
 }
 

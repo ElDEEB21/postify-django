@@ -1,16 +1,16 @@
 :root {
-  --primary: #778873;
-  --primary-hover: #5f6d5c;
-  --secondary: #a1bc98;
-  --accent: #d2dcb6;
-  --light-accent: #f1f3e0;
-  --text: #2d3a2e;
-  --text-light: #555;
-  --text-muted: #999;
-  --border: rgba(161, 188, 152, 0.5);
-  --bg: rgba(241, 243, 224, 0.6);
-  --bg-light: rgba(210, 220, 182, 0.4);
-  --tag-bg: rgba(161, 188, 152, 0.3);
+  --primary: #1e40af;
+  --primary-hover: #1e3a8a;
+  --secondary: #3b82f6;
+  --accent: #f59e0b;
+  --light-accent: #f9fafb;
+  --text: #1f2937;
+  --text-light: #4b5563;
+  --text-muted: #9ca3af;
+  --border: #e5e7eb;
+  --bg: #ffffff;
+  --bg-light: #f9fafb;
+  --tag-bg: rgba(59, 130, 246, 0.1);
 }
 
 .editor-container {
@@ -147,7 +147,7 @@
 }
 
 .tag-checkbox label:hover {
-  background: #e0e0e0;
+  background: var(--border);
 }
 
 .tag-checkbox input[type="checkbox"]:checked + label {
@@ -183,7 +183,7 @@
 }
 
 .btn-delete {
-  background: #dc3545;
+  background: #ef4444;
   color: white;
   border: none;
   border-radius: 6px;
@@ -198,7 +198,7 @@
 }
 
 .btn-delete:hover {
-  background: #c82333;
+  background: #dc2626;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
 }

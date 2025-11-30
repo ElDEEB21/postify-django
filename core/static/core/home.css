@@ -23,10 +23,10 @@
 .hero-headline {
   font-size: 48px;
   font-weight: bold;
-  color: #1a1a2e;
+  color: var(--text);
   line-height: 1.2;
   margin: 0;
-  background: linear-gradient(135deg, #778873 0%, #a1bc98 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -34,7 +34,7 @@
 
 .hero-description {
   font-size: 18px;
-  color: #555555;
+  color: var(--text-light);
   line-height: 1.6;
   margin: 15px 0 25px;
 }
@@ -50,7 +50,7 @@
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  background: linear-gradient(135deg, #778873 0%, #a1bc98 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: #ffffff;
   font-size: 16px;
   font-weight: 600;
@@ -58,13 +58,17 @@
   text-decoration: none;
   transition: all 0.3s ease;
   border: none;
-  box-shadow: 0 4px 16px rgba(119, 136, 115, 0.35);
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #5f6d5c 0%, #778873 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover) 0%,
+    var(--primary) 100%
+  );
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(119, 136, 115, 0.5);
+  box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
 }
 
 .btn-secondary {
@@ -72,22 +76,22 @@
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  background: rgba(241, 243, 224, 0.8);
-  color: #778873;
+  background: var(--bg-card);
+  color: var(--primary);
   font-size: 16px;
   font-weight: 600;
   border-radius: 12px;
   text-decoration: none;
-  border: 2px solid #a1bc98;
+  border: 2px solid var(--primary);
   transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background: linear-gradient(135deg, #778873 0%, #a1bc98 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: #ffffff;
   transform: translateY(-3px);
   border-color: transparent;
-  box-shadow: 0 4px 16px rgba(119, 136, 115, 0.4);
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
 }
 
 .hero-image {
@@ -101,15 +105,15 @@
   width: 100%;
   height: auto;
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(119, 136, 115, 0.35);
+  box-shadow: 0 10px 40px rgba(30, 64, 175, 0.2);
   object-fit: cover;
-  border: 3px solid rgba(161, 188, 152, 0.6);
+  border: 3px solid var(--border);
 }
 
 /* Featured Posts Section */
 .featured-section {
   padding: 60px 0;
-  background: rgba(210, 220, 182, 0.4);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
 }
 
@@ -126,7 +130,7 @@
 .section-header h2 {
   font-size: 32px;
   font-weight: bold;
-  color: #1a1a2e;
+  color: var(--text);
   margin: 0;
   display: flex;
   align-items: center;
@@ -145,14 +149,14 @@
 
 .view-all-link {
   font-size: 16px;
-  color: #778873;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .view-all-link:hover {
-  color: #a1bc98;
+  color: var(--secondary);
   text-decoration: underline;
   transform: translateX(5px);
 }
@@ -168,7 +172,7 @@
   text-align: center;
   padding: 60px 20px;
   font-size: 18px;
-  color: #777;
+  color: var(--text-light);
 }
 
 /* Latest Posts Section */
@@ -179,11 +183,16 @@
 
 /* CTA Banner */
 .cta-banner {
-  background: linear-gradient(135deg, #778873 0%, #a1bc98 50%, #d2dcb6 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--secondary) 50%,
+    var(--accent) 100%
+  );
   color: #ffffff;
   text-align: center;
   padding: 60px 20px;
-  box-shadow: 0 -4px 20px rgba(119, 136, 115, 0.35);
+  box-shadow: 0 -4px 20px rgba(30, 64, 175, 0.3);
 }
 
 .cta-container {
@@ -211,7 +220,7 @@
   gap: 8px;
   padding: 14px 32px;
   background-color: #ffffff;
-  color: #778873;
+  color: var(--primary);
   font-size: 16px;
   font-weight: bold;
   border-radius: 12px;

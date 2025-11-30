@@ -1,17 +1,19 @@
 /* Authentication Pages */
 
 :root {
-  --primary: #778873;
-  --primary-hover: #5f6d5c;
-  --secondary: #a1bc98;
-  --accent: #d2dcb6;
-  --light-accent: #f1f3e0;
-  --text: #2d3a2e;
-  --text-light: #555;
-  --text-muted: #999;
-  --border: rgba(161, 188, 152, 0.5);
-  --bg: rgba(241, 243, 224, 0.6);
-  --bg-light: rgba(210, 220, 182, 0.4);
+  --primary: #1e40af;
+  --primary-hover: #1e3a8a;
+  --secondary: #3b82f6;
+  --accent: #f59e0b;
+  --light-accent: #f9fafb;
+  --text: #1f2937;
+  --text-light: #4b5563;
+  --text-muted: #9ca3af;
+  --border: #e5e7eb;
+  --bg: #ffffff;
+  --bg-light: #f9fafb;
+  --success: #10b981;
+  --error: #ef4444;
 }
 
 .auth-container {
@@ -27,11 +29,11 @@
   max-width: 400px;
   width: 100%;
   padding: 30px;
-  background: rgba(241, 243, 224, 0.8);
+  background: var(--bg-card);
   backdrop-filter: blur(10px);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(119, 136, 115, 0.25);
-  border: 1px solid rgba(161, 188, 152, 0.5);
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.15);
+  border: 1px solid var(--border);
 }
 
 /* Alerts */
@@ -48,15 +50,15 @@
 }
 
 .alert-success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid var(--success);
 }
 
 .alert-error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid var(--error);
 }
 
 .alert-warning {
@@ -105,7 +107,7 @@
 .form-group label {
   font-size: 14px;
   font-weight: 500;
-  color: #333333;
+  color: var(--text);
 }
 
 .input-wrapper {
@@ -134,11 +136,11 @@
 
 .form-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(30, 120, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
 }
 
 .form-input::placeholder {
-  color: #aaa;
+  color: var(--text-muted);
 }
 
 /* Forgot Password */
@@ -163,7 +165,7 @@
   width: 100%;
   padding: 12px 20px;
   background: var(--primary);
-  color: var(--bg);
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-size: 15px;
@@ -223,7 +225,7 @@
 .separator::after {
   content: "";
   flex: 1;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border);
 }
 
 .separator span {
@@ -238,12 +240,12 @@
   text-align: center;
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border);
 }
 
 .auth-footer p {
   font-size: 14px;
-  color: #666;
+  color: var(--text-light);
 }
 
 .auth-footer a {

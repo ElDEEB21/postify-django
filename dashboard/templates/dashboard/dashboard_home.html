@@ -146,11 +146,11 @@ Postify{% endblock %} {% block css_files %}
       datasets: [{
         label: 'Posts Published',
         data: [{% for data in monthly_data %}{{ data.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-        borderColor: '#778873',
-        backgroundColor: 'rgba(119, 136, 115, 0.1)',
+        borderColor: '#1E40AF',
+        backgroundColor: 'rgba(30, 64, 175, 0.1)',
         tension: 0.4,
         fill: true,
-        pointBackgroundColor: '#778873',
+        pointBackgroundColor: '#1E40AF',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
         pointRadius: 4,
@@ -165,7 +165,7 @@ Postify{% endblock %} {% block css_files %}
           display: false
         },
         tooltip: {
-          backgroundColor: '#778873',
+          backgroundColor: '#1E40AF',
           padding: 12,
           titleColor: '#fff',
           bodyColor: '#fff',
