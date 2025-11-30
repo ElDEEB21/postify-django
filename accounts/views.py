@@ -7,6 +7,7 @@ from django.urls import reverse
 from .forms import RegisterForm, LoginForm, ProfileForm
 from .models import Profile
 from blog.models import Post
+from comments.models import Comment
 
 
 class RegisterView(FormView):
@@ -86,30 +87,40 @@ class UserProfileView(UpdateView):
         profile_obj, created = Profile.objects.get_or_create(user=profile_user)
         return profile_obj
 
+    def get_profile_user(self):
+        """Cache and return the profile user."""
+        if not hasattr(self, '_profile_user'):
+            username = self.kwargs.get('username')
+            self._profile_user = get_object_or_404(User, username=username)
+        return self._profile_user
+
+    def is_own_profile(self):
+        """Check if the current user is viewing their own profile."""
+        return (self.request.user.is_authenticated and 
+                self.request.user.username == self.kwargs.get('username'))
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        username = self.kwargs.get('username')
-        profile_user = get_object_or_404(User, username=username)
+        profile_user = self.get_profile_user()
 
-        context['profile_user'] = profile_user
-        context['profile'] = self.get_object()
-        context['user_posts'] = Post.objects.filter(
-            author=profile_user).order_by('-created_at')
-        context['is_own_profile'] = self.request.user.is_authenticated and self.request.user.username == username
+        context.update({
+            'profile_user': profile_user,
+            'profile': self.get_object(),
+            'user_posts': Post.objects.filter(author=profile_user).order_by('-created_at'),
+            'is_own_profile': self.is_own_profile(),
+            'comment_count': Comment.objects.filter(user=profile_user).count(),
+            'views_count': sum(post.views for post in Post.objects.filter(author=profile_user).order_by('-created_at'))
+        })
         return context
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        profile_user = get_object_or_404(
-            User, username=self.kwargs.get('username'))
+        profile_user = self.get_profile_user()
         kwargs['initial'] = {'name': profile_user.get_full_name()}
         return kwargs
 
     def form_valid(self, form):
-        is_own_profile = self.request.user.is_authenticated and self.request.user.username == self.kwargs.get(
-            'username')
-
-        if not is_own_profile:
+        if not self.is_own_profile():
             return redirect('user_profile', username=self.kwargs.get('username'))
 
         profile = form.save(commit=False)
@@ -131,8 +142,6 @@ class UserProfileView(UpdateView):
         return redirect('user_profile', username=self.kwargs.get('username'))
 
     def post(self, request, *args, **kwargs):
-        is_own_profile = request.user.is_authenticated and request.user.username == self.kwargs.get(
-            'username')
-        if not is_own_profile:
+        if not self.is_own_profile():
             return redirect('user_profile', username=self.kwargs.get('username'))
         return super().post(request, *args, **kwargs)
