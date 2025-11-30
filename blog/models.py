@@ -49,3 +49,16 @@ class Post(models.Model):
             base64_data = base64.b64encode(self.cover_image).decode('utf-8')
             return f"data:{self.cover_image_type};base64,{base64_data}"
         return None
+    
+    @property
+    def read_time(self):
+        import re
+        text = re.sub(r'```[\s\S]*?```', '', self.content) 
+        text = re.sub(r'`[^`]+`', '', text) 
+        text = re.sub(r'#+ ', '', text)
+        text = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', text)
+        text = re.sub(r'[*_~`]', '', text) 
+        
+        word_count = len(text.split())
+        read_time = max(1, round(word_count / 200)) 
+        return read_time
