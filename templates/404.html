@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 - Page Not Found | Postify</title>
+    <link rel="stylesheet" href="{% static 'app.css' %}" />
+    <style>
+      .error-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          var(--light-accent) 0%,
+          var(--accent) 100%
+        );
+        padding: 2rem;
+      }
+
+      .error-content {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        padding: 3rem 2rem;
+        max-width: 600px;
+        text-align: center;
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .error-emoji {
+        font-size: 8rem;
+        margin-bottom: 1rem;
+        display: block;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .error-code {
+        font-size: 6rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin: 0;
+        line-height: 1;
+        letter-spacing: -0.05em;
+      }
+
+      .error-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 1rem 0;
+      }
+
+      .error-message {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 1.5rem 0 2rem;
+        line-height: 1.6;
+      }
+
+      .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .error-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 2rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .error-btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+
+      .error-btn-primary:hover {
+        background: #5f6d5a;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(119, 136, 115, 0.3);
+      }
+
+      .error-btn-secondary {
+        background: white;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+
+      .error-btn-secondary:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(119, 136, 115, 0.3);
+      }
+
+      .error-suggestions {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 2px solid var(--light-accent);
+      }
+
+      .error-suggestions h3 {
+        font-size: 1.2rem;
+        color: var(--text);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .error-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .error-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .error-link:hover {
+        color: var(--secondary);
+        transform: translateX(5px);
+      }
+
+      @media (max-width: 768px) {
+        .error-content {
+          padding: 2rem 1.5rem;
+        }
+
+        .error-emoji {
+          font-size: 5rem;
+        }
+
+        .error-code {
+          font-size: 4rem;
+        }
+
+        .error-title {
+          font-size: 1.5rem;
+        }
+
+        .error-message {
+          font-size: 1rem;
+        }
+
+        .error-actions {
+          flex-direction: column;
+        }
+
+        .error-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <div class="error-content">
+        <span class="error-emoji">🔍</span>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page Not Found</h2>
+        <p class="error-message">
+          Oops! The page you're looking for seems to have wandered off. It might
+          have been moved, deleted, or perhaps it never existed.
+        </p>
+
+        <div class="error-actions">
+          <a href="{% url 'home' %}" class="error-btn error-btn-primary">
+            <span>🏠</span>
+            <span>Go Home</span>
+          </a>
+          <a href="{% url 'blog_home' %}" class="error-btn error-btn-secondary">
+            <span>📝</span>
+            <span>Browse Blog</span>
+          </a>
+        </div>
+
+        <div class="error-suggestions">
+          <h3>You might want to try:</h3>
+          <div class="error-links">
+            <a href="{% url 'home' %}" class="error-link">
+              <span>→</span>
+              <span>Homepage</span>
+            </a>
+            <a href="{% url 'blog_home' %}" class="error-link">
+              <span>→</span>
+              <span>Latest Blog Posts</span>
+            </a>
+            <a href="{% url 'about' %}" class="error-link">
+              <span>→</span>
+              <span>About Us</span>
+            </a>
+            <a href="{% url 'contact' %}" class="error-link">
+              <span>→</span>
+              <span>Contact Support</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

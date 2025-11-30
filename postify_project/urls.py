@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,3 +27,12 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('', include('core.urls')),
 ]
+
+handler404 = 'postify_project.views.custom_404'
+handler500 = 'postify_project.views.custom_500'
+
+if settings.DEBUG:
+    from django.views.defaults import page_not_found
+    urlpatterns += [
+        path('404-test/', lambda request: page_not_found(request, Exception())),
+    ]
