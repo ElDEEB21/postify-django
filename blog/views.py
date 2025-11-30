@@ -1,5 +1,7 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import ListView, DetailView, FormView
 from django.utils import timezone
 from .forms import BlogPostForm
@@ -131,3 +133,19 @@ class PostDetailView(DetailView):
             post.views += 1
             post.save(update_fields=['views'])
             self.request.session[session_key] = True
+
+
+@login_required
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    
+    if request.user != post.author:
+        messages.error(request, 'You do not have permission to delete this post.')
+        return redirect('post_detail', slug=slug)
+    
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Post deleted successfully!')
+        return redirect('blog_home')
+    
+    return redirect('post_detail', slug=slug)

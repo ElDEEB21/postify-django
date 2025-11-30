@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% load static %} {% block title %}{{ post.title }} -
-Postify{% endblock %} {% block css_files %}
+{% extends "base.html" %} {% load static %} {% load markdown_extras %} 
+{% block title %}{{ post.title }} - Postify{% endblock %} 
+{% block css_files %}
 <link rel="stylesheet" href="{% static 'blog/post_detail.css' %}" />
 {% endblock %} {% block content %}
 <div class="post-detail-container">
@@ -14,7 +15,10 @@ Postify{% endblock %} {% block css_files %}
 
   {% if post.category %}
   <div>
-    <a href="{% url 'blog_home' %}?category={{ post.category.id }}" class="post-category">
+    <a
+      href="{% url 'blog_home' %}?category={{ post.category.id }}"
+      class="post-category"
+    >
       {{ post.category.name }}
     </a>
   </div>
@@ -64,7 +68,7 @@ Postify{% endblock %} {% block css_files %}
   />
   {% endif %}
 
-  <article class="post-content">{{ post.content|linebreaks }}</article>
+  <article class="post-content">{{ post.content|markdown }}</article>
 
   {% if post.tags.all %}
   <div class="post-tags-section">
@@ -82,7 +86,7 @@ Postify{% endblock %} {% block css_files %}
     <div class="comments-preview-header">
       <h3>💬 Discussion</h3>
       <span class="comment-count-badge"
-        >{{ post.comments.count }} 
+        >{{ post.comments.count }}
         comment{{post.comments.count|pluralize}}</span
       >
     </div>

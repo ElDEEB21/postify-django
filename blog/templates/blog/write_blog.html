@@ -59,7 +59,38 @@ else %}Write{% endif %} Post - Postify{% endblock %} {% block css_files %}
       <button type="submit" class="btn-publish">
         {% if post %}Update Post{% else %}Publish{% endif %}
       </button>
+      {% if post %}
+      <button type="button" class="btn-delete" onclick="confirmDelete()">
+        🗑️ Delete Post
+      </button>
+      {% endif %}
     </div>
   </form>
 </div>
+
+<script>
+  function confirmDelete() {
+    if (
+      confirm(
+        "Are you sure you want to delete this post? This action cannot be undone."
+      )
+    ) {
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = '{% if post %}{% url "delete_post" post.slug %}{% endif %}';
+
+      const csrfToken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
+      const csrfInput = document.createElement("input");
+      csrfInput.type = "hidden";
+      csrfInput.name = "csrfmiddlewaretoken";
+      csrfInput.value = csrfToken;
+
+      form.appendChild(csrfInput);
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
+</script>
 {% endblock %}

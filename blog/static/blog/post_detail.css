@@ -191,11 +191,120 @@
   margin-bottom: 40px;
 }
 
+.post-content h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #111;
+  margin: 35px 0 15px 0;
+}
+
 .post-content h2 {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: bold;
   color: #111;
   margin: 30px 0 15px 0;
+}
+
+.post-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+  margin: 25px 0 12px 0;
+}
+
+.post-content h4 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 20px 0 10px 0;
+}
+
+.post-content p {
+  margin-bottom: 16px;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: 16px 0;
+  padding-left: 28px;
+}
+
+.post-content li {
+  margin-bottom: 8px;
+}
+
+.post-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.post-content a:hover {
+  color: var(--primary-hover);
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--secondary);
+  padding: 12px 20px;
+  margin: 20px 0;
+  background: rgba(161, 188, 152, 0.1);
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.post-content code {
+  background: rgba(119, 136, 115, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.post-content pre {
+  background: #2d3a2e;
+  color: #f1f3e0;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.post-content table th,
+.post-content table td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+}
+
+.post-content table th {
+  background: var(--light-accent);
+  font-weight: 600;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.post-content hr {
+  border: none;
+  border-top: 2px solid var(--accent);
+  margin: 30px 0;
 }
 
 .post-content h3 {
