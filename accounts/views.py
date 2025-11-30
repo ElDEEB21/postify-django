@@ -54,6 +54,9 @@ class LoginView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect('user_profile', username=request.user.username)
         return super().dispatch(request, *args, **kwargs)
 
@@ -64,6 +67,9 @@ class LoginView(FormView):
 
         if user is not None:
             auth_login(self.request, user)
+            next_url = self.request.GET.get('next') or self.request.POST.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect('user_profile', username=user.username)
         else:
             form.add_error(None, 'Invalid email or password.')

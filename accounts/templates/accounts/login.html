@@ -18,7 +18,9 @@
     {% endif %}
 
     <form method="POST">
-      {% csrf_token %}
+      {% csrf_token %} {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+      {% endif %}
 
       <div class="form-group">
         <label for="email">Email</label>
