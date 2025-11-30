@@ -29,7 +29,7 @@
             >Blog</a
           >
           <a
-            href=""
+            href="{% url 'dashboard_home' %}"
             class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
             >Dashboard</a
           >

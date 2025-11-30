@@ -1,0 +1,198 @@
+{% extends "base.html" %} {% load static %} {% block title %}Dashboard -
+Postify{% endblock %} {% block css_files %}
+<link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}" />
+{% endblock %} {% block content %}
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="dashboard-title">Dashboard</h1>
+      <p class="dashboard-subtitle">
+        Welcome back, {{ user.get_full_name }}! Here's your content overview.
+      </p>
+    </div>
+    <a href="{% url 'write_blog' %}" class="btn-new-post">
+      <span class="icon">+</span>
+      New Post
+    </a>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📋</div>
+      <div class="stat-content">
+        <h3 class="stat-title">Total Posts</h3>
+        <p class="stat-value">{{ total_posts }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">📁</div>
+      <div class="stat-content">
+        <h3 class="stat-title">Archived</h3>
+        <p class="stat-value">{{ archived_posts }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">💬</div>
+      <div class="stat-content">
+        <h3 class="stat-title">Comments</h3>
+        <p class="stat-value">{{ total_comments }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">👁️</div>
+      <div class="stat-content">
+        <h3 class="stat-title">Total Views</h3>
+        <p class="stat-value">{{ total_views|default:"0" }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h2 class="section-title">Posts Published Over Time</h2>
+    <div class="chart-container">
+      <canvas id="postsChart"></canvas>
+    </div>
+  </div>
+
+  <div class="recent-posts-section">
+    <div class="section-header">
+      <h2 class="section-title">Recent Posts</h2>
+      <a
+        href="{% url 'user_profile' username=user.username %}"
+        class="view-all-link"
+        >View All →</a
+      >
+    </div>
+
+    <div class="table-container">
+      <table class="posts-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Views</th>
+            <th>Comments</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in recent_posts %}
+          <tr>
+            <td class="post-title-cell">
+              <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+            </td>
+            <td>
+              {% if post.is_archived %}
+              <span class="status-badge status-archived">archived</span>
+              {% else %}
+              <span class="status-badge status-published">published</span>
+              {% endif %}
+            </td>
+            <td>{{ post.views }}</td>
+            <td>{{ post.comments.count }}</td>
+            <td>{{ post.created_at|date:"M d, Y" }}</td>
+            <td class="actions-cell">
+              <a
+                href="{% url 'edit_blog' post.slug %}"
+                class="action-btn"
+                title="Edit"
+              >
+                ✏️
+              </a>
+              <form
+                method="post"
+                action="{% url 'delete_post' post.slug %}"
+                style="display: inline"
+                onsubmit="return confirm('Are you sure you want to delete this post?');"
+              >
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="action-btn delete-btn"
+                  title="Delete"
+                >
+                  🗑️
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="empty-message">
+              No posts yet.
+              <a href="{% url 'write_blog' %}">Create your first post!</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('postsChart').getContext('2d');
+  const monthlyData = {{ monthly_data|safe }};
+
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [{% for data in monthly_data %}'{{ data.month }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+      datasets: [{
+        label: 'Posts Published',
+        data: [{% for data in monthly_data %}{{ data.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+        borderColor: '#778873',
+        backgroundColor: 'rgba(119, 136, 115, 0.1)',
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#778873',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          backgroundColor: '#778873',
+          padding: 12,
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          cornerRadius: 8
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            color: '#555'
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#555'
+          },
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

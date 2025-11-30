@@ -23,5 +23,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('blog/', include('blog.urls')),
     path('comments/', include('comments.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('', include('core.urls')),
 ]
