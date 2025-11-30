@@ -88,14 +88,12 @@ class UserProfileView(UpdateView):
         return profile_obj
 
     def get_profile_user(self):
-        """Cache and return the profile user."""
         if not hasattr(self, '_profile_user'):
             username = self.kwargs.get('username')
             self._profile_user = get_object_or_404(User, username=username)
         return self._profile_user
 
     def is_own_profile(self):
-        """Check if the current user is viewing their own profile."""
         return (self.request.user.is_authenticated and 
                 self.request.user.username == self.kwargs.get('username'))
 
@@ -106,10 +104,11 @@ class UserProfileView(UpdateView):
         context.update({
             'profile_user': profile_user,
             'profile': self.get_object(),
-            'user_posts': Post.objects.filter(author=profile_user).order_by('-created_at'),
+            'user_posts': Post.objects.filter(author=profile_user, is_archived=False).order_by('-created_at'),
             'is_own_profile': self.is_own_profile(),
             'comment_count': Comment.objects.filter(user=profile_user).count(),
-            'views_count': sum(post.views for post in Post.objects.filter(author=profile_user).order_by('-created_at'))
+            'views_count': sum(post.views for post in Post.objects.filter(author=profile_user, is_archived=False).order_by('-created_at')),
+            'user_archived_posts': Post.objects.filter(author=profile_user, is_archived=True).order_by('-created_at'),
         })
         return context
 

@@ -4,7 +4,9 @@
       Posts ({{ user_posts.count }})
     </button>
     {% if is_own_profile %}
-    <button class="tab-btn" data-tab="drafts">Drafts</button>
+    <button class="tab-btn" data-tab="drafts">
+      Archived ({{ user_archived_posts.count }})
+    </button>
     {% endif %}
   </div>
 
@@ -29,9 +31,19 @@
   </div>
 
   <div class="tab-content" id="drafts-tab">
-    <div class="empty-state">
-      <span class="empty-icon">📄</span>
-      <p>No drafts yet.</p>
+    {% if user_archived_posts %}
+    <div class="posts-grid">
+      {% for post in user_archived_posts %}
+      <a href="{% url 'post_detail' post.slug %}" class="post-card-link">
+        {% include 'components/post_card.html' with post=post %}
+      </a>
+      {% endfor %}
     </div>
+    {% else %}
+    <div class="empty-state">
+      <span class="empty-icon">📁</span>
+      <p>No archived posts yet.</p>
+    </div>
+    {% endif %}
   </div>
 </div>

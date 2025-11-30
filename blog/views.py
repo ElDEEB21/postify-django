@@ -15,7 +15,7 @@ class BlogHomeView(ListView):
     ordering = ['-created_at']
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(is_archived=False)
 
         selected_category = self.request.GET.get('category')
         if selected_category:
@@ -29,12 +29,14 @@ class BlogHomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['total_posts'] = Post.objects.count()
-        context['categories'] = Category.objects.all()
-        context['tags'] = Tag.objects.all()
-        context['selected_category'] = self.request.GET.get('category')
-        context['selected_tag'] = self.request.GET.get('tag')
-        context['all_categories'] = Category.objects.all()
+        context.update({
+            'total_posts': Post.objects.filter(is_archived=False).count(),
+            'categories': Category.objects.all(),
+            'tags': Tag.objects.all(),
+            'selected_category': self.request.GET.get('category'),
+            'selected_tag': self.request.GET.get('tag'),
+            'all_categories': Category.objects.all()
+        })
         return context
 
 
@@ -134,18 +136,47 @@ class PostDetailView(DetailView):
             post.save(update_fields=['views'])
             self.request.session[session_key] = True
 
-
-@login_required
-def delete_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+class DeletePostView(LoginRequiredMixin, DetailView):
+    model = Post
+    login_url = 'login'
     
-    if request.user != post.author:
-        messages.error(request, 'You do not have permission to delete this post.')
-        return redirect('post_detail', slug=slug)
-    
-    if request.method == 'POST':
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        
+        if request.user != post.author:
+            messages.error(request, 'You do not have permission to delete this post.')
+            return redirect('post_detail', slug=post.slug)
+        
         post.delete()
         messages.success(request, 'Post deleted successfully!')
         return redirect('blog_home')
     
-    return redirect('post_detail', slug=slug)
+    def get(self, request, *args, **kwargs):
+        post = self.get_object()
+        return redirect('post_detail', slug=post.slug)
+
+
+class ArchivePostView(LoginRequiredMixin, DetailView):
+    model = Post
+    login_url = 'login'
+    
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        
+        if request.user != post.author:
+            messages.error(request, 'You do not have permission to archive this post.')
+            return redirect('post_detail', slug=post.slug)
+        
+        post.is_archived = not post.is_archived
+        post.save(update_fields=['is_archived'])
+        
+        if post.is_archived:
+            messages.success(request, 'Post archived successfully!')
+        else:
+            messages.success(request, 'Post unarchived successfully!')
+        
+        return redirect('post_detail', slug=post.slug)
+    
+    def get(self, request, *args, **kwargs):
+        post = self.get_object()
+        return redirect('post_detail', slug=post.slug)

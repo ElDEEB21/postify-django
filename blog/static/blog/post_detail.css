@@ -21,6 +21,13 @@
   flex-wrap: wrap;
 }
 
+/* Post Author Actions Container */
+.post-author-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 /* Edit Button */
 .btn-edit-post {
   display: inline-flex;
@@ -41,6 +48,31 @@
   background: linear-gradient(135deg, #5f6d5c, #778873);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(119, 136, 115, 0.5);
+}
+
+/* Archive Button */
+.btn-archive-post {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(210, 220, 182, 0.9);
+  color: #778873;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #a1bc98;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 10px rgba(161, 188, 152, 0.25);
+}
+
+.btn-archive-post:hover {
+  background: #a1bc98;
+  color: #fff;
+  border-color: #778873;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(161, 188, 152, 0.45);
 }
 
 /* Back Link */

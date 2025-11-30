@@ -28,6 +28,7 @@ class Post(models.Model):
     cover_image_type = models.CharField(max_length=50, blank=True, null=True)
     slug = models.SlugField(max_length=200, blank=True, db_index=True, default='')
     views = models.PositiveIntegerField(default=0)
+    is_archived = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

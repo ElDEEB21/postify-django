@@ -1,15 +1,27 @@
 {% extends "base.html" %} {% load static %} {% load markdown_extras %} 
-{% block title %}{{ post.title }} - Postify{% endblock %} 
-{% block css_files %}
+{% block title %}{{ post.title }} - Postify{% endblock %} {% block css_files %}
 <link rel="stylesheet" href="{% static 'blog/post_detail.css' %}" />
 {% endblock %} {% block content %}
 <div class="post-detail-container">
   <div class="post-actions-bar">
     <a href="{% url 'blog_home' %}" class="back-link">← Back to Blog</a>
     {% if user.is_authenticated and user == post.author %}
-    <a href="{% url 'edit_blog' post.slug %}" class="btn-edit-post"
-      >✏️ Edit Post</a
-    >
+    <div class="post-author-actions">
+      <a href="{% url 'edit_blog' post.slug %}" class="btn-edit-post"
+        >✏️ Edit Post</a
+      >
+      <form
+        method="post"
+        action="{% url 'archive_post' post.slug %}"
+        style="display: inline"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn-archive-post">
+          {% if post.is_archived %} 📂 Unarchive Post {% else %} 📁 Archive Post
+          {% endif %}
+        </button>
+      </form>
+    </div>
     {% endif %}
   </div>
 
@@ -114,9 +126,7 @@
     </div>
     <div class="bio-content">
       <h3>About {{ post.author.get_full_name }}</h3>
-      <p>
-        {{ post.author.profile.bio|default:"No Bio Available" }}
-      </p>
+      <p>{{ post.author.profile.bio|default:"No Bio Available" }}</p>
       <a
         href="{% url 'user_profile' username=post.author.username %}"
         class="btn-view-profile"
