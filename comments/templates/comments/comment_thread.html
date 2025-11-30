@@ -1,0 +1,106 @@
+{% extends "base.html" %} {% load static %} {% block title %}Comments - {{
+post.title }} - Postify{% endblock %} {% block css_files %}
+<link rel="stylesheet" href="{% static 'comments/comments.css' %}" />
+{% endblock %} {% block content %}
+<div class="comments-page-container">
+  <div class="post-reference">
+    <a href="{% url 'post_detail' post.slug %}" class="back-to-post"
+      >← Back to Post</a
+    >
+    <h2 class="post-title">{{ post.title }}</h2>
+  </div>
+
+  <div class="comments-section">
+    <div class="comments-header">
+      <h2>
+        <span class="comment-icon">💬</span>
+        Comments ({{ comment_count }})
+      </h2>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="new-comment-form">
+      <form method="post" action="{% url 'add_comment' post.slug %}">
+        {% csrf_token %} {{ form.content }}
+        <button type="submit" class="btn-post-comment">Post Comment</button>
+      </form>
+    </div>
+    {% else %}
+    <div class="login-prompt">
+      <p>
+        Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to
+        leave a comment.
+      </p>
+    </div>
+    {% endif %}
+
+    <div class="comments-list">
+      {% if comments %} {% for comment in comments %}
+      <div class="comment-item" data-comment-id="{{ comment.id }}">
+        {% include 'comments/comment_item.html' with comment_type='comment' %}
+        {% if user.is_authenticated %}
+        <div class="comment-footer">
+          <button class="btn-reply" onclick="toggleReplyForm({{ comment.id }})">
+            Reply
+          </button>
+        </div>
+
+        <div
+          class="reply-form"
+          id="reply-form-{{ comment.id }}"
+          style="display: none"
+        >
+          <form
+            method="post"
+            action="{% url 'add_reply' post.slug comment.id %}"
+          >
+            {% csrf_token %}
+            <textarea
+              name="content"
+              placeholder="Write your reply..."
+              rows="3"
+              class="reply-textarea"
+              required
+            ></textarea>
+            <div class="reply-form-actions">
+              <button type="submit" class="btn-post-reply">Post Reply</button>
+              <button
+                type="button"
+                class="btn-cancel"
+                onclick="toggleReplyForm({{ comment.id }})"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+        {% endif %} {% if comment.replies.all %}
+        <div class="replies-container">
+          {% for reply in comment.replies.all %}
+          <div class="reply-item">
+            {% include 'comments/comment_item.html' with comment=reply comment_type='reply' %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %} {% else %}
+      <div class="no-comments">
+        <p>No comments yet. Be the first to share your thoughts!</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleReplyForm(commentId) {
+    const replyForm = document.getElementById("reply-form-" + commentId);
+    if (replyForm.style.display === "none") {
+      replyForm.style.display = "block";
+    } else {
+      replyForm.style.display = "none";
+    }
+  }
+</script>
+{% endblock %}

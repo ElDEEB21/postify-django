@@ -1,0 +1,40 @@
+<div class="comment-header">
+  <div class="comment-author">
+    <div class="author-avatar">
+      {% if comment.user.profile.get_avatar_data_url %}
+      <img
+        src="{{ comment.user.profile.get_avatar_data_url }}"
+        alt="{{ comment.user.get_full_name }}"
+      />
+      {% else %}
+      <div class="avatar-placeholder">
+        {{ comment.user.first_name.0 }}{{ comment.user.last_name.0 }}
+      </div>
+      {% endif %}
+    </div>
+    <div class="author-info">
+      <span class="author-name">{{ comment.user.get_full_name }}</span>
+      <span class="comment-date">{{ comment.created_at|date:"M d, Y" }}</span>
+    </div>
+  </div>
+  {% if user == comment.user or user == post.author %}
+  <div class="comment-actions">
+    <form
+      method="post"
+      action="{% url 'delete_comment' post.slug comment.id %}"
+      class="delete-form"
+    >
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="btn-delete"
+        onclick="return confirm('Are you sure you want to delete this {{ comment_type|default:'comment' }}?')"
+      >
+        🗑️
+      </button>
+    </form>
+  </div>
+  {% endif %}
+</div>
+
+<div class="comment-content">{{ comment.content|linebreaks }}</div>

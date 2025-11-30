@@ -72,6 +72,23 @@ Postify{% endblock %} {% block css_files %}
   </div>
   {% endif %}
 
+  <div class="comments-preview-section">
+    <div class="comments-preview-header">
+      <h3>💬 Discussion</h3>
+      <span class="comment-count-badge"
+        >{{ post.comments.count }} 
+        comment{{ post.comments.count|pluralize}}</span
+      >
+    </div>
+    <p class="comments-preview-text">
+      Join the conversation and share your thoughts on this article.
+    </p>
+    <a href="{% url 'post_comments' post.slug %}" class="btn-view-comments">
+      View All Comments
+      <span class="btn-arrow">→</span>
+    </a>
+  </div>
+
   <div class="author-bio-card">
     <div class="bio-avatar">
       {% if post.author.profile.get_avatar_data_url %}
